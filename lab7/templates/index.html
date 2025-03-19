@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NASA Astronomy Picture of the Day</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 20px;
+            background-color: #f4f4f4;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+        img, iframe {
+            max-width: 100%;
+            height: auto;
+            margin-top: 20px;
+            border-radius: 8px;
+        }
+        .error {
+            color: red;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>NASA Astronomy Picture of the Day</h1>
+
+        {% if error %}
+            <p class="error">{{ error }}</p>
+        {% elif apod %}
+            <h2>{{ apod.title }}</h2>
+            <p><strong>Date:</strong> {{ apod.date }}</p>
+
+            {% if apod.media_type == "image" %}
+                <img src="{{ apod.url }}" alt="NASA APOD">
+            {% elif apod.media_type == "video" %}
+                <iframe src="{{ apod.url }}" frameborder="0" allowfullscreen></iframe>
+            {% else %}
+                <p>Media type not supported.</p>
+            {% endif %}
+
+            <p>{{ apod.explanation }}</p>
+        {% else %}
+            <p>Error loading APOD data. Please try again later.</p>
+        {% endif %}
+    </div>
+</body>
+</html>
